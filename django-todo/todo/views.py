@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from .models import Item
 from .forms import ItemForm, CustomSignupForm
@@ -93,6 +94,7 @@ class UserSignupView(View, ContextMixin):
         form = CustomSignupForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Вы успешно создали аккаунт.', extra_tags='alert alert-success')
             return redirect('login')
         else:
             context = self.get_context_data()
